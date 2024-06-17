@@ -11,7 +11,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="bg-gray-200 p-12">
+  <body class="bg-gray-200 p-4">
+    <p class="text-red-600 text-center p-6">
+      Since the backend is running on a free tier (on Render.com), it may spin
+      down during periods of inactivity, causing request delays of 50 seconds or
+      more.
+    </p>
     <div
       x-data="{
             newTodo: '',
@@ -32,6 +37,7 @@
 
             async addTodo() {
                 try {
+                  console.log('hii1');
                     const res = await fetch('https://agami-backend.onrender.com/todo', {
                         method: 'POST',
                         headers: {
@@ -40,6 +46,7 @@
                         body: JSON.stringify({ text: this.newTodo }),
                     });
                     const newTodo = await res.json();
+
                     console.log('new todo',newTodo);
                     this.todos.push(newTodo);
                     this.newTodo = '';
@@ -63,7 +70,7 @@
                         body: JSON.stringify(
                             { 
                                 text: this.editText, 
-                                completed: this.editingTodo.completed 
+                                completed: this.editingTodo.completed
                             }),
                     });
                     const updatedTodo = await response.json();
@@ -127,7 +134,7 @@
               ></span>
             </div>
             <div>
-              <button @click="editTodo(todo)" class="text-yellow-500">
+              <button x-on:click="editTodo(todo)" class="text-yellow-500">
                 Edit
               </button>
               <button @click="deleteTodo(todo._id)" class="text-red-500 ml-2">
