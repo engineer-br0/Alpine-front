@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div x-data="{ message: 'I ❤️ Alpine', admin : 'MRIDUL' }">
+      <h1 x-text="message"></h1>
+      <h2 class="bg-gray-200" x-text="admin">Admiin</h2>
+
+      <div
+        x-data="{ 
+                open: false,
+                count: 0,
+                message: 'change this text...',
+                colors: ['Red', 'Orange', 'Yellow'],
+                incre: function(){
+                        this.count++;
+                        },
+                decre: function(){
+                    this.count--;
+                },
+                isOpen: function(){
+                            return this.open;
+                        } 
+                }"
+      >
+        <div @click.outside="decre">
+          <span x-text="'count + is : ' + count"></span>
+          <button x-on:click="incre" class="bg-blue-400 rounded-lg px-2">
+            Increment
+          </button>
+        </div>
+        <div>
+          <button @click="open = !open;" class="bg-red-200 rounded">
+            Toggle
+          </button>
+          <span x-text="isOpen"></span>
+          <div x-show="open" x-transition class="bg-gray-400 p-4">
+            Content available if open...
+          </div>
+        </div>
+        <button @click="greet">say hii..</button>
+
+        <div>
+          <input type="text" x-model="message" class="border border-black" />
+          <p x-text="message"></p>
+        </div>
+      </div>
+
+      <ul x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+        <!-- x-for MUST be declared on a <template> element That <template> element MUST contain only one root element
+                we have to define array in that root element -->
+        <template x-for="color in colors">
+          <li x-text="color"></li>
+        </template>
+      </ul>
+    </div>
+
+    <script>
+      function greet(e) {
+        alert("hii...");
+        //console.log(e);
+      }
+    </script>
+  </body>
+</html>
